@@ -2,6 +2,7 @@ class FartApp {
     constructor() {
         this.fartButton = document.getElementById('fartButton');
         this.soundWaves = document.getElementById('soundWaves');
+        this.soundLabel = document.getElementById('soundLabel');
         this.cushionShape = document.querySelector('.cushion-shape');
         this.audioElements = [];
         this.currentAudio = null;
@@ -31,6 +32,12 @@ class FartApp {
             e.preventDefault();
             this.playFart();
         });
+        this.fartButton.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                this.playFart();
+            }
+        });
         
         // Add visual feedback for button press
         this.fartButton.addEventListener('mousedown', () => this.buttonPress());
@@ -43,7 +50,7 @@ class FartApp {
             e.preventDefault();
         });
         
-        console.log('Fart App initialized with', this.audioElements.length, 'sound effects');
+        this.updateSoundLabel('Ready');
     }
     
     playFart() {
@@ -70,14 +77,16 @@ class FartApp {
                 this.currentAudio = selectedAudio;
                 this.showSoundWaves();
                 this.addRippleEffect();
-                console.log(`Playing fart sound ${randomIndex + 1}`);
+                this.updateSoundLabel('Tooting...');
             }).catch(error => {
                 console.error('Error playing sound:', error);
                 this.isPlaying = false;
+                this.updateSoundLabel('Tap to try again');
             });
         } catch (error) {
             console.error('Error playing sound:', error);
             this.isPlaying = false;
+            this.updateSoundLabel('Tap to try again');
         }
     }
     
@@ -85,7 +94,7 @@ class FartApp {
         this.isPlaying = false;
         this.currentAudio = null;
         this.hideSoundWaves();
-        console.log('Fart sound ended');
+        this.updateSoundLabel('Ready');
     }
     
     showSoundWaves() {
@@ -98,15 +107,22 @@ class FartApp {
     
     buttonPress() {
         this.fartButton.classList.add('pressed');
-        this.cushionShape.style.transform = 'scale(0.92)';
+        if (this.cushionShape) {
+            this.cushionShape.style.transform = 'scale(0.92)';
+        }
     }
     
     buttonRelease() {
         this.fartButton.classList.remove('pressed');
-        this.cushionShape.style.transform = 'scale(1)';
+        if (this.cushionShape) {
+            this.cushionShape.style.transform = 'scale(1)';
+        }
     }
     
     addRippleEffect() {
+        if (!this.cushionShape) {
+            return;
+        }
         // Remove existing ripple
         this.cushionShape.classList.remove('ripple');
         
@@ -120,6 +136,12 @@ class FartApp {
         setTimeout(() => {
             this.cushionShape.classList.remove('ripple');
         }, 600);
+    }
+
+    updateSoundLabel(message) {
+        if (this.soundLabel) {
+            this.soundLabel.textContent = message;
+        }
     }
 }
 
@@ -157,5 +179,3 @@ window.addEventListener('orientationchange', () => {
         window.scrollTo(0, 1);
     }, 500);
 });
-
-console.log('Fart App script loaded successfully');
