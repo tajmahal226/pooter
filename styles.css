@@ -1,0 +1,191 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.app-container {
+    width: 100vw;
+    height: 100vh;
+    max-width: 400px;
+    max-height: 800px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+}
+
+.app-header {
+    margin-top: 20px;
+}
+
+.app-header h1 {
+    font-size: 2rem;
+    color: #d63384;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 8px;
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.whoopee-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    transition: transform 0.1s ease;
+    padding: 0;
+    position: relative;
+    border-radius: 50%;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.whoopee-button:active {
+    transform: scale(0.95);
+}
+
+.cushion-image {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #e74c3c, #c0392b);
+    padding: 10px;
+    transition: transform 0.1s ease;
+}
+
+.sound-indicator {
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.sound-waves {
+    display: none;
+    gap: 4px;
+    align-items: center;
+}
+
+.sound-waves.active {
+    display: flex;
+}
+
+.sound-waves span {
+    width: 6px;
+    height: 20px;
+    background: #d63384;
+    border-radius: 3px;
+    animation: soundWave 0.6s ease-in-out infinite alternate;
+}
+
+.sound-waves span:nth-child(2) { animation-delay: 0.1s; }
+.sound-waves span:nth-child(3) { animation-delay: 0.2s; }
+.sound-waves span:nth-child(4) { animation-delay: 0.3s; }
+.sound-waves span:nth-child(5) { animation-delay: 0.4s; }
+
+@keyframes soundWave {
+    0% { height: 20px; }
+    100% { height: 40px; }
+}
+
+.app-footer {
+    margin-bottom: 20px;
+}
+
+.app-footer p {
+    font-size: 0.9rem;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+/* Responsive adjustments */
+@media (max-width: 320px) {
+    .cushion-image {
+        width: 160px;
+        height: 160px;
+    }
+    
+    .app-header h1 {
+        font-size: 1.6rem;
+    }
+    
+    .subtitle {
+        font-size: 0.9rem;
+    }
+}
+
+@media (min-width: 375px) {
+    .cushion-image {
+        width: 220px;
+        height: 220px;
+    }
+    
+    .app-header h1 {
+        font-size: 2.2rem;
+    }
+}
+
+/* Animation for button press */
+@keyframes buttonPress {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.92); }
+    100% { transform: scale(1); }
+}
+
+.whoopee-button.pressed {
+    animation: buttonPress 0.3s ease-out;
+}
+
+/* Ripple effect */
+@keyframes ripple {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+.cushion-shape::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.cushion-shape.ripple::after {
+    animation: ripple 0.6s ease-out;
+}
