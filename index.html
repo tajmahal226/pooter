@@ -10,15 +10,20 @@
     <div class="app-container">
         <div class="app-header">
             <h1>Pooter</h1>
+            <p class="subtitle">Tap the cushion for instant giggles.</p>
         </div>
         
         <div class="main-content">
             <button class="whoopee-button" id="fartButton" aria-label="Press for fart sound">
-                <img src="pooter-cushion.png" alt="Pooter cushion" class="cushion-image">
+                <span class="cushion-shape">
+                    <img src="pooter-cushion.png" alt="Pooter cushion" class="cushion-image">
+                </span>
+                <span class="button-label">Tap to toot</span>
             </button>
         </div>
         
         <div class="sound-indicator">
+            <p class="sound-label" id="soundLabel" aria-live="polite">Ready</p>
             <div class="sound-waves" id="soundWaves">
                 <span></span>
                 <span></span>
